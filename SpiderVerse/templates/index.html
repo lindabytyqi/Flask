@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}SpiderVerse — Home{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            THE MULTIVERSE OF SPIDER-MAN
+        </p>
+
+        <h1>
+            One hero.<br>
+            <span>Many universes.</span>
+        </h1>
+
+        <p class="hero-description">
+            Esplora film, personaggi e universi del cinema di Spider-Man
+            attraverso un unico database.
+        </p>
+
+        <div class="search-container">
+
+            <input
+                id="global-search"
+                type="text"
+                placeholder="Cerca un personaggio..."
+                autocomplete="off"
+            >
+
+            <div id="search-results"></div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- =========================
+     UNIVERSES
+========================= -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <div>
+            <p class="section-label">
+                01 / UNIVERSES
+            </p>
+
+            <h2>
+                Explore the multiverse
+            </h2>
+        </div>
+
+        <a href="{{ url_for('universes.all_universes') }}">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="universe-grid">
+
+        {% for universe in universes %}
+
+            <a
+                class="universe-card"
+                href="{{ url_for('universes.universe_detail', id=universe.id) }}"
+            >
+
+                <div class="universe-image">
+
+                    <img
+                        src="{{
+                            url_for(
+                                'static',
+                                filename='images/' ~
+                                (universe.image if universe.image else 'placeholder.svg')
+                            )
+                        }}"
+                        alt="{{ universe.name }}"
+                        loading="lazy"
+                        onerror="
+                            this.onerror=null;
+                            //this.src='{{ url_for('static', filename='images/placeholder.svg') }}';
+                        "
+                    >
+
+                </div>
+
+
+                <span class="card-number">
+                    {{ "%02d"|format(loop.index) }}
+                </span>
+
+
+                <div class="card-content">
+
+                    <span class="card-label">
+                        {{ universe.actor or "Unknown" }}
+                    </span>
+
+                    <h3>
+                        {{ universe.name }}
+                    </h3>
+
+                    <p>
+                        {{ universe.description }}
+                    </p>
+
+                    <span class="explore">
+                        EXPLORE →
+                    </span>
+
+                </div>
+
+            </a>
+
+        {% else %}
+
+            <p>Nessun universo disponibile.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MOVIES
+========================= -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <div>
+            <p class="section-label">
+                02 / MOVIES
+            </p>
+
+            <h2>
+                Latest films
+            </h2>
+        </div>
+
+        <a href="{{ url_for('movies.all_movies') }}">
+            View all →
+        </a>
+
+    </div>
+
+
+    <div class="movie-grid">
+
+        {% for movie in movies %}
+
+            <a
+                class="movie-card"
+                href="{{ url_for('movies.movie_detail', id=movie.id) }}"
+            >
+
+                <div class="movie-image">
+
+                    <img
+                        src="{{
+                            url_for(
+                                'static',
+                                filename='images/' ~
+                                (movie.poster if movie.poster else 'placeholder.svg')
+                            )
+                        }}"
+                        alt="{{ movie.title }}"
+                        loading="lazy"
+                        onerror="
+                            this.onerror=null;
+                           // this.src='{{ url_for('static', filename='images/placeholder.svg') }}';
+                        "
+                    >
+
+                </div>
+
+
+                <span class="movie-year">
+                    {{ movie.year }}
+                </span>
+
+
+                <div class="movie-info">
+
+                    <h3>
+                        {{ movie.title }}
+                    </h3>
+
+                    <p>
+                        {{ movie.director or "Unknown director" }}
+                    </p>
+
+                </div>
+
+            </a>
+
+        {% else %}
+
+            <p>Nessun film disponibile.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

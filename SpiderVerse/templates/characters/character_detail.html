@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ character.name }} — SpiderVerse{% endblock %}
+{% block content %}
+<section class="detail-page">
+    <div class="detail-number">CHARACTER {{ "%02d"|format(character.id) }}</div>
+    <div class="character-detail">
+        <div class="detail-visual">
+            <img
+                src="{{ url_for('static', filename='images/' ~ character.image) }}"
+                alt="{{ character.name }}"
+                class="character-detail-image"
+                onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/placeholder.svg') }}';"
+            >
+        </div>
+        <div class="detail-info">
+            <p class="section-label">{{ character.role }} · {{ character.status }}</p>
+            <h1>{{ character.name }}</h1>
+            <h2>{{ character.alias }}</h2>
+            <p class="detail-description">{{ character.description }}</p>
+            <div class="detail-stats">
+                <div><span>Actor</span><strong>{{ character.actor }}</strong></div>
+                <div><span>Gender</span><strong>{{ character.gender }}</strong></div>
+                <div><span>Type</span><strong>{{ character.type }}</strong></div>
+                <div><span>Role</span><strong>{{ character.role }}</strong></div>
+            </div>
+            <div class="detail-block">
+                <p class="section-label">POWERS</p>
+                <p>{{ character.powers }}</p>
+            </div>
+            <div class="detail-block">
+                <p class="section-label">MOVIES</p>
+                <div class="tag-list">
+                    {% for movie in character.movies %}
+                    <a href="{{ url_for('movies.movie_detail', id=movie.id) }}">{{ movie.title }}</a>
+                    {% else %}<span>Nessun film collegato.</span>{% endfor %}
+                </div>
+            </div>
+            <div class="detail-block">
+                <p class="section-label">UNIVERSES</p>
+                <div class="tag-list">
+                    {% for universe in character.universes %}
+                    <a href="{{ url_for('universes.universe_detail', id=universe.id) }}">{{ universe.name }}</a>
+                    {% else %}<span>Nessun universo collegato.</span>{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

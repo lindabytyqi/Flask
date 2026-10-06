@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ movie.title }} — SpiderVerse{% endblock %}
+
+{% block content %}
+<section class="detail-page">
+    <div class="detail-number">MOVIE {{ "%02d"|format(movie.id) }}</div>
+    <div class="movie-detail">
+        <div class="detail-visual">
+            <img
+                src="{{ url_for('static', filename='images/' ~ movie.poster) }}"
+                alt="{{ movie.title }}"
+                class="movie-detail-poster"
+                onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/placeholder.svg') }}';"
+            >
+        </div>
+        <div class="detail-info">
+            <p class="section-label">{{ movie.year }} · {{ movie.universe.name }}</p>
+            <h1>{{ movie.title }}</h1>
+            <p class="detail-description">{{ movie.description }}</p>
+            <div class="detail-stats">
+                <div><span>Director</span><strong>{{ movie.director }}</strong></div>
+                <div><span>Duration</span><strong>{% if movie.duration %}{{ movie.duration }} min{% else %}—{% endif %}</strong></div>
+                <div><span>Year</span><strong>{{ movie.year }}</strong></div>
+            </div>
+            <div class="detail-block">
+                <p class="section-label">CHARACTERS</p>
+                <div class="tag-list">
+                    {% for character in movie.characters %}
+                        <a href="{{ url_for('characters.character_detail', id=character.id) }}">{{ character.name }}</a>
+                    {% else %}
+                        <span>Nessun personaggio disponibile.</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Universes — SpiderVerse{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="section-label">THE MULTIVERSE</p>
+    <h1>Universes</h1>
+    <p>Le principali versioni cinematografiche di Spider-Man.</p>
+</section>
+
+<section class="section">
+    <div class="universe-grid">
+        {% for universe in universes %}
+        <a class="universe-card" href="{{ url_for('universes.universe_detail', id=universe.id) }}">
+            <span class="card-number">{{ "%02d"|format(loop.index) }}</span>
+            <div class="card-content">
+                <span class="card-label">{{ universe.actor }}</span>
+                <h3>{{ universe.name }}</h3>
+                <p>{{ universe.description }}</p>
+                <span class="explore">EXPLORE →</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

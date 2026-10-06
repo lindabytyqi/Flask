@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Characters — SpiderVerse
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-header">
+
+    <p class="section-label">
+        SPIDERVERSE / CHARACTERS
+    </p>
+
+    <h1>Characters</h1>
+
+    <p>
+        Esplora tutti i personaggi del multiverso di Spider-Man.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+    <div class="character-grid">
+
+        {% for character in characters %}
+
+        <a
+            class="character-card"
+            href="{{ url_for(
+                'characters.character_detail',
+                id=character.id
+            ) }}"
+        >
+
+            <div class="character-image">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='images/' + character.image
+                    ) }}"
+                    alt="{{ character.name }}"
+                    onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/placeholder.svg') }}';"
+                >
+
+            </div>
+
+
+            <div class="character-info">
+
+                <span>
+                    {{ character.actor }}
+                </span>
+
+                <h3>
+                    {{ character.name }}
+                </h3>
+
+                <p>
+                    {{ character.alias }}
+                </p>
+
+            </div>
+
+        </a>
+
+        {% else %}
+
+        <p>Nessun personaggio trovato.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

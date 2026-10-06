@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Movies — SpiderVerse{% endblock %}
+{% block content %}
+<section class="page-header">
+    <p class="section-label">FILM DATABASE</p>
+    <h1>Movies</h1>
+    <p>Tutti i film presenti nel database SpiderVerse.</p>
+</section>
+<section class="section">
+    <div class="movie-grid">
+        {% for movie in movies %}
+        <a class="movie-card" href="{{ url_for('movies.movie_detail', id=movie.id) }}">
+            <div class="movie-image">
+                <img src="{{ url_for('static', filename='images/' ~ movie.poster) }}" alt="{{ movie.title }}"
+                     onerror="this.onerror=null; this.src='{{ url_for('static', filename='images/placeholder.svg') }}';">
+            </div>
+            <span class="movie-year">{{ movie.year }}</span>
+            <div class="movie-info">
+                <h3>{{ movie.title }}</h3>
+                <p>{{ movie.director }} · {{ movie.universe.name }}</p>
+            </div>
+        </a>
+        {% else %}<p>Nessun film disponibile.</p>{% endfor %}
+    </div>
+</section>
+{% endblock %}

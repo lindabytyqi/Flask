@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Admin — SpiderVerse{% endblock %}
+{% block content %}
+<section class="page-header">
+    <p class="section-label">ADMIN AREA</p>
+    <h1>Dashboard</h1>
+    <p>Area riservata agli amministratori.</p>
+</section>
+<section class="section">
+    <div class="admin-stats">
+        <div><span>Utenti</span><strong>{{ user_count }}</strong></div>
+        <div><span>Universi</span><strong>{{ universe_count }}</strong></div>
+        <div><span>Film</span><strong>{{ movie_count }}</strong></div>
+        <div><span>Personaggi</span><strong>{{ character_count }}</strong></div>
+    </div>
+    <div class="admin-panel">
+        <h2>Utenti e permessi</h2>
+        <table class="admin-table">
+            <thead><tr><th>Username</th><th>Email</th><th>Ruolo</th><th>Azione</th></tr></thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>
+                        {% if user.id != current_user.id %}
+                        <form method="post" action="{{ url_for('admin.toggle_role', user_id=user.id) }}">
+                            <button class="small-button" type="submit">Cambia ruolo</button>
+                        </form>
+                        {% else %}Account corrente{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

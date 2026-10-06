@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Registrazione — SpiderVerse{% endblock %}
+{% block content %}
+<section class="auth-page">
+    <form class="auth-card" method="post">
+        <p class="section-label">ACCOUNT</p>
+        <h1>Registrazione</h1>
+        <label>Username<input type="text" name="username" required></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Password<input type="password" name="password" minlength="8" required></label>
+        <button type="submit" class="primary-button">Crea account</button>
+    </form>
+</section>
+{% endblock %}

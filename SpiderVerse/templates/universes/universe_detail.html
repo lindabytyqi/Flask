@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ universe.name }} — SpiderVerse{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="section-label">{{ universe.actor }}</p>
+    <h1>{{ universe.name }}</h1>
+    <p>{{ universe.description }}</p>
+</section>
+
+<section class="section">
+    <div class="detail-stats universe-stats">
+        <div><span>Actor / Voice</span><strong>{{ universe.actor }}</strong></div>
+        <div><span>Movies</span><strong>{{ universe.movies|length }}</strong></div>
+        <div><span>Characters</span><strong>{{ universe.characters|length }}</strong></div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header"><h2>Movies</h2></div>
+    <div class="movie-grid">
+        {% for movie in universe.movies %}
+        <a class="movie-card" href="{{ url_for('movies.movie_detail', id=movie.id) }}">
+            <span class="movie-year">{{ movie.year }}</span>
+            <div class="movie-info">
+                <h3>{{ movie.title }}</h3>
+                <p>{{ movie.director }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header"><h2>Characters</h2></div>
+    <div class="character-grid">
+        {% for character in universe.characters %}
+        <a class="character-card" href="{{ url_for('characters.character_detail', id=character.id) }}">
+            <div class="character-info">
+                <span>{{ character.actor }}</span>
+                <h3>{{ character.name }}</h3>
+                <p>{{ character.alias }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
